@@ -1,3 +1,4 @@
+import 'package:easymusic/search.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -5,7 +6,7 @@ import 'package:easymusic/Event.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'Details.dart';
-
+import 'search.dart';
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -90,12 +91,14 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
+                      padding: const EdgeInsets.only(left: 20.0),
                       child: Container(
                         child: Text(
                           'Events',
                           style: TextStyle(
-                            fontSize: 29,
+                            fontSize: 24,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w500,
                             height: 1,
                           ),
                         ),
@@ -105,10 +108,16 @@ class _HomeState extends State<Home> {
                       padding: const EdgeInsets.only(right: 18.0),
                       child: Row(
                         children: [
-                          Icon(
+                          IconButton(onPressed:(){
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => Search(), // Pass the events list
+                              ),
+                            );
+                          }, icon: Icon(
                             Icons.search,
                             size: 30,
-                          ),
+                          ),),
                           SizedBox(
                             width: 15,
                           ),
@@ -197,7 +206,9 @@ class _HomeState extends State<Home> {
                                       formatDateTime(event.dateTime),
                                       style: TextStyle(
                                         color: Colors.blue,
-                                        fontSize: 15,
+                                        fontSize: 13,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w400,
                                       ),
                                     )
                                   ],
@@ -208,14 +219,17 @@ class _HomeState extends State<Home> {
                                 Row(
                                   children: [
                                     SizedBox(
-                                      width:260.0,
+                                      width:200.0,
                                       child: Text(event.organiserName,
                                         maxLines:2,
                                         overflow: TextOverflow.ellipsis,
                                         softWrap: false,
                                         style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: 17,
+                                          fontSize: 15,
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w500,
+
                                       ),),
                                     )
                                   ],
@@ -226,23 +240,25 @@ class _HomeState extends State<Home> {
 
                                 Row(
                                   children: [
-                                    Icon(Icons.location_on_rounded,
-                                    color: Colors.grey,),
-                                    SizedBox(width: 3,),
+                                    Icon(Icons.location_on_rounded, color: Colors.grey),
+                                    SizedBox(width: 3),
                                     SizedBox(
-                                      width:260.0,
-                                      child: Text(event.venueName+' . '+event.venueCity+','+event.venueCountry,
-                                        maxLines:1,
+                                      width: 200.0,
+                                      child: Text(
+                                        event.venueName + ' . ' + event.venueCity + ',' + event.venueCountry,
+                                        maxLines: 3, // Allow the text to occupy up to two lines
+                                        overflow: TextOverflow.ellipsis, // Show ellipsis when overflowing
                                         style: TextStyle(
-                                        color: Colors.grey,
+                                          color: Colors.grey,
                                           fontSize: 13,
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w400,
+                                        ),
                                       ),
-                                        overflow: TextOverflow.ellipsis,
-                                        softWrap: false,
-                                      ),
-                                    )
+                                    ),
                                   ],
                                 ),
+
                               ],
                             ),
                           ],
